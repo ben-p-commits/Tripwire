@@ -23,18 +23,13 @@ public class SplashActivity extends Activity {
 		
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		//select xml layout
+		//select layout
 		setContentView(R.layout.activity_splash);
-		LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-		ConnectionManager cm = new ConnectionManager(getApplicationContext());
+		checkConnectivityToProceed();
+		
+		
 		
 
-        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
-            Toast.makeText(this, "GPS is enabled", Toast.LENGTH_SHORT).show();
-        }else{
-            showGPSDisabledAlertToUser();
-        }
-		
 	}
 
 	@Override
@@ -46,33 +41,14 @@ public class SplashActivity extends Activity {
 	
 	@Override
 	protected void onResume(){
-		checkGPStoProceed();
+		checkConnectivityToProceed();
 	}
 	
-	private void checkGPStoProceed(){
-		
+	private boolean checkConnectivityToProceed(){
+		ConnectionManager cm = new ConnectionManager(getApplicationContext());
+		return (cm.confirmGPSConnection() && cm.confirmNetworkConnection());
 	}
 
 
-	private void showGPSDisabledAlertToUser(){
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setMessage("GPS is disabled on the device. Would you like to enable it?")
-        .setCancelable(false)
-        .setPositiveButton("Go to settings to enable",
-                new DialogInterface.OnClickListener(){
-            public void onClick(DialogInterface dialog, int id){
-                Intent callGPSSettingIntent = new Intent(
-                        android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                startActivity(callGPSSettingIntent);
-            }
-        });
-        alertDialogBuilder.setNegativeButton("Cancel",
-                new DialogInterface.OnClickListener(){
-            public void onClick(DialogInterface dialog, int id){
-                dialog.cancel();
-            }
-        });
-        AlertDialog alert = alertDialogBuilder.create();
-        alert.show();
-    }
+
 }
