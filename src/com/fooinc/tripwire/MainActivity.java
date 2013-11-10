@@ -41,17 +41,14 @@ public class MainActivity extends Activity {
 		if (googleMap == null) {
 			googleMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
 
-			//fly to North Carolina
-			CameraPosition cameraPosition = new CameraPosition.Builder().target(
-					new LatLng(36.41, -79.41 )).zoom(6).build();
-			googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+			//fly to Current location
 			googleMap.getUiSettings().setMyLocationButtonEnabled(true);
 			googleMap.setMyLocationEnabled(true);
 
 			// check if map is created successfully or not
 			if (googleMap == null) {
 				Toast.makeText(getApplicationContext(), "Sorry! unable to create map. See LogCat for error info!", Toast.LENGTH_SHORT).show();
-			}
+			} 
 		}
 	}
 

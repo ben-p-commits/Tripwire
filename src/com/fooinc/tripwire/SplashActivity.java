@@ -1,7 +1,7 @@
 package com.fooinc.tripwire;
 
 import android.app.Activity;
-
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.Window;
@@ -19,8 +19,8 @@ public class SplashActivity extends Activity {
 		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		//select layout
 		setContentView(R.layout.activity_splash);
-		checkConnectivityToProceed();
 		
+		transitionToMain();
 		
 		
 
@@ -35,12 +35,17 @@ public class SplashActivity extends Activity {
 	
 	@Override
 	protected void onResume(){
+		super.onResume();
 		checkConnectivityToProceed();
 	}
 	
 	private boolean checkConnectivityToProceed(){
-		ConnectionManager cm = new ConnectionManager(getApplicationContext());
+		ConnectionManager cm = new ConnectionManager(this);
 		return (cm.confirmGPSConnection() && cm.confirmNetworkConnection());
+	}
+	private void transitionToMain(){
+		 Intent intent = new Intent(this, MainActivity.class);
+		    startActivity(intent);
 	}
 
 
