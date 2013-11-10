@@ -46,6 +46,7 @@ public class MainActivity extends Activity {
 					new LatLng(36.41, -79.41 )).zoom(6).build();
 			googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 			googleMap.getUiSettings().setMyLocationButtonEnabled(true);
+			googleMap.setMyLocationEnabled(true);
 
 			// check if map is created successfully or not
 			if (googleMap == null) {
